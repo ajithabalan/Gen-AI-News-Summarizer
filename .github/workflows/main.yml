@@ -1,0 +1,33 @@
+name: CI - React (Vite) in Subfolder
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Navigate to frontend and install deps
+        working-directory: ./newssummary
+        run: npm ci
+
+      - name: Build frontend (Vite)
+        working-directory: ./newssummary
+        run: npm run build
+
+      # Optional: Uncomment if you have frontend tests
+      # - name: Run tests
+      #   working-directory: ./newssummary
+      #   run: npm test
